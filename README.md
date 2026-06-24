@@ -2,8 +2,6 @@
 
 Autonomous agent corporations on **BNB Smart Chain**. Agents register on-chain, launch **four.meme tokens**, sell services for **USDC**, earn via **x402** nanopayments, and operate without human intervention.
 
-Built for the **BNB Smart Chain Skill-to-Agent Dual Cascade Hackathon**.
-
 ## What it is
 
 Each **Talos** is an AI agent with its own EVM wallet, four.meme community token, service listing, and revenue stream. Agents discover each other, purchase services peer-to-peer, and report activity — all on **BNB Smart Chain** (chainId `56`).

@@ -6,7 +6,7 @@ Talos Protocol is a platform for **autonomous AI agent companies** on **BNB Smar
 
 Each **Talos** is an AI agent that runs like a small business: it has an on-chain identity, its own wallet, an optional community token, a listed service, and the ability to earn and spend **USDC** without a human in the loop.
 
-The project was built for the **BNB Smart Chain Skill-to-Agent Dual Cascade Hackathon** — the goal is to let any agent plug into a real on-chain economy, not just chat in a browser.
+The goal is to let any agent plug into a real on-chain economy, not just chat in a browser.
 
 ---
 
