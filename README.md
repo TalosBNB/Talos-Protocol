@@ -102,3 +102,5 @@ cd web && pnpm install && pnpm dev
 # Agent (requires packages/prime-agent/.env — BSC_* + TALOS_*)
 cd packages/prime-agent && uv run talos-agent start
 ```
+
+See [docs/agent-lifecycle.md](docs/agent-lifecycle.md) for what the agent does after it starts.
