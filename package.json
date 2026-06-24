@@ -2,6 +2,7 @@
   "name": "talos-protocol",
   "private": true,
   "license": "AGPL-3.0-only",
+  "packageManager": "pnpm@10.34.4",
   "scripts": {
     "dev": "pnpm --dir web dev",
     "build": "pnpm --dir web build",
