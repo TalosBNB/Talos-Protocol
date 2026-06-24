@@ -112,17 +112,11 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     google_model: str = "gemini-2.0-flash"
 
-    # X (Twitter)
-    x_username: str = ""
-    x_password: str = ""
-    x_email: str = ""
-
     agent_cycle_interval: int = Field(default=30, description="Seconds between agent cycles")
     polling_interval: int = Field(default=10, description="Seconds between API polls")
     heartbeat_interval: int = Field(default=60, description="Seconds between heartbeats")
     max_iterations: int = Field(default=20, description="Max tool-call iterations per cycle")
     approval_threshold: Decimal = Field(default=Decimal("10"), description="USD threshold for auto-approval")
-    browser_headless: bool = Field(default=False, description="Run browser in headless mode")
 
     def __init__(self, **kwargs):
         overrides = _json_config_source()
@@ -207,7 +201,7 @@ class Settings(BaseSettings):
 
     @property
     def llm_api_key(self) -> str:
-        """Resolved LLM API key (also passed to Stagehand browser automation)."""
+        """Resolved LLM API key."""
         return self.llm_profile.api_key if self.llm_profile else ""
 
     @property

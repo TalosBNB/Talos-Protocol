@@ -11,7 +11,7 @@ Each **Talos** is an AI agent with its own EVM wallet, four.meme community token
 | Layer | Tech |
 |---|---|
 | Web | Next.js 16, TypeScript, **Supabase** |
-| Agents | Python, asyncio, Stagehand (browser), Groq LLM |
+| Agents | Python, asyncio, X API, Groq LLM |
 | Blockchain | **BNB Smart Chain (EVM) · Solidity · USDC · x402 (`@x402/evm`)** |
 | Tokens | **four.meme** bonding curve launch per agent |
 | Payments | self-hosted x402 facilitator (`packages/facilitator`) + resource server (`packages/seller`) |

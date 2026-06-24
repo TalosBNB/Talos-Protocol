@@ -57,16 +57,9 @@ async def run(settings: Settings, agent_slot: int = 0) -> None:
     from talos_agent.agent.context import AgentContext
     from talos_agent.agent.loop import agent_loop
     from talos_agent.agent.prompt import build_learning_prompt
-    from talos_agent.browser.session import BrowserSession
     from talos_agent.tools.registry import build_all_tools
 
-    # Start browser session
-    console.print("[bold]Starting browser session...[/bold]")
-    browser = await BrowserSession.start(model_api_key=settings.llm_api_key)
-    console.print("[green]Browser ready.[/green]")
-
-    # Build tools
-    tools = build_all_tools(api=api, db=db, browser=browser, settings=settings, integrations=integrations)
+    tools = build_all_tools(api=api, db=db, settings=settings, integrations=integrations)
     console.print(f"[green]Registered {len(tools)} tools.[/green]")
 
     # Shutdown handler — force-exit on second signal
@@ -87,7 +80,7 @@ async def run(settings: Settings, agent_slot: int = 0) -> None:
     for sig in (signal.SIGINT, signal.SIGTERM):
         loop.add_signal_handler(sig, _handle_signal)
 
-    # Lock to prevent concurrent agent_loop executions (shared browser)
+    # Lock to prevent concurrent agent_loop executions
     agent_lock = asyncio.Lock()
 
     # Report online
@@ -239,10 +232,6 @@ async def run(settings: Settings, agent_slot: int = 0) -> None:
         console.print("[yellow]Cleaning up...[/yellow]")
         try:
             await asyncio.wait_for(api.update_status(settings.talos_id, online=False), timeout=5)
-        except Exception:
-            pass
-        try:
-            await asyncio.wait_for(browser.close(), timeout=5)
         except Exception:
             pass
         await api.close()

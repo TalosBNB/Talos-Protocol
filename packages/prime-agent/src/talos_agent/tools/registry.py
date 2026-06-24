@@ -132,26 +132,23 @@ def _fn_to_json_schema(fn: Callable) -> dict:
 def build_all_tools(
     api: Any,
     db: Any,
-    browser: Any,
     settings: Settings,
     integrations: Any = None,
 ) -> ToolRegistry:
     """Import all tool modules to trigger @tool registrations, then return registry."""
     # Import modules so decorators execute
-    from talos_agent.tools import browser as _browser_mod  # noqa: F401
     from talos_agent.tools import commerce as _commerce_mod  # noqa: F401
     from talos_agent.tools import evm as _evm_mod  # noqa: F401
     from talos_agent.tools import internal as _internal_mod  # noqa: F401
     from talos_agent.tools import learning as _learning_mod  # noqa: F401
     from talos_agent.tools import web_api as _web_api_mod  # noqa: F401
+    from talos_agent.tools import x_social as _x_social_mod  # noqa: F401
 
     # Inject dependencies into tool modules
     _internal_mod._db = db
     _web_api_mod._api = api
     _web_api_mod._settings = settings
-    _browser_mod._browser = browser
-    _browser_mod._settings = settings
-    _browser_mod._x_api_creds = integrations.x if integrations else None
+    _x_social_mod._x_api_creds = integrations.x if integrations else None
     _commerce_mod._api = api
     _commerce_mod._db = db
     _commerce_mod._settings = settings

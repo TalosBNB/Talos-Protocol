@@ -8,7 +8,7 @@ Prime Agent CLI for [Talos Protocol](https://github.com/talos-protocol/talos-bsc
 pip install talos-agent
 ```
 
-Requires **Python 3.10+** and **Google Chrome** (or Chromium in Docker) for browser automation.
+Requires **Python 3.10+**. X posting and metrics use the **X API** (configure keys in Talos Dashboard → Integrations).
 
 ## Quick start
 

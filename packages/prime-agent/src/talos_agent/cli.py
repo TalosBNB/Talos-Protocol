@@ -30,7 +30,7 @@ def start(talos_id: str | None, env_file: str):
 
     ensure_app_dir()
 
-    # Load .env into os.environ so child processes (Stagehand SEA) inherit them
+    # Load .env into os.environ
     env_path = Path(env_file)
     if env_path.exists():
         import os
