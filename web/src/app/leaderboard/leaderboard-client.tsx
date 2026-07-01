@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AgentAvatar } from "@/components/agent-avatar";
+import { useTranslation } from "@/lib/i18n";
 
 const TABS = ["Top TALOS", "Top Patrons", "Top Agents", "Trending"] as const;
 type Tab = (typeof TABS)[number];
@@ -57,13 +58,14 @@ interface Props {
 
 export function LeaderboardClient({ topTalos, topPatrons, topAgents, trending }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>("Top TALOS");
+  const t = useTranslation();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
       <div className="mb-10">
-        <div className="text-sm text-muted mb-2 tracking-wide">// RANKINGS</div>
-        <h1 className="text-accent text-2xl font-bold tracking-wide mb-2">Leaderboard</h1>
-        <p className="text-muted text-sm">Rankings across the TALOS ecosystem</p>
+        <div className="text-sm text-muted mb-2 tracking-wide">{t.leaderboard.label}</div>
+        <h1 className="text-accent text-2xl font-bold tracking-wide mb-2">{t.leaderboard.title}</h1>
+        <p className="text-muted text-sm">{t.leaderboard.subtitle}</p>
       </div>
 
       <div className="flex gap-4 sm:gap-6 border-b border-border mb-8 overflow-x-auto scrollbar-hide">

@@ -11,6 +11,7 @@ import {
   TALOS_NAME_SERVICE_CONTRACT,
 } from "@/lib/contracts";
 import { bscChain, getPublicClient, BSC_CHAIN_ID } from "@/lib/evm";
+import { useTranslation } from "@/lib/i18n";
 
 // ── Inline ABIs (write functions + event) — reads live in @/lib/contracts ──
 const REGISTRY_WRITE_ABI = parseAbi([
@@ -40,10 +41,11 @@ const STEPS = [
 const CHANNELS = ["X (Twitter)", "LinkedIn", "Reddit", "Product Hunt"];
 
 export default function LaunchPage() {
+  const t = useTranslation();
   return (
     <WalletGate
-      title="Connect Wallet to Launch"
-      description="Creating a TALOS requires an EVM wallet on BNB Smart Chain. Your address will be registered as the Creator."
+      title={t.launch.connectTitle}
+      description={t.launch.connectDesc}
     >
       <LaunchForm />
     </WalletGate>
@@ -56,6 +58,7 @@ function LaunchForm() {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslation();
   const [form, setForm] = useState({
     productName: "",
     productDesc: "",
@@ -376,7 +379,7 @@ function LaunchForm() {
       <div className="max-w-3xl mx-auto px-6 py-12">
         <div className="mb-8">
           <div className="text-xs text-accent font-bold mb-2">[GENESIS COMPLETE]</div>
-          <h1 className="text-2xl font-bold text-accent">TALOS Launched Successfully</h1>
+          <h1 className="text-2xl font-bold text-accent">{t.launch.successTitle}</h1>
         </div>
 
         <div className="bg-surface border border-accent/30 p-8 mb-6 space-y-6">
@@ -471,7 +474,7 @@ function LaunchForm() {
               copied ? "border-accent text-accent font-bold" : "border-border text-foreground hover:bg-surface-hover"
             }`}
           >
-            {copied ? "Copied!" : "Copy API Key"}
+            {copied ? t.launch.copied : t.launch.copyApiKey}
           </button>
           <button
             onClick={() => router.push(`/agents/${genesisResult.talosId}`)}
@@ -526,9 +529,9 @@ function LaunchForm() {
 
       {/* Step indicator */}
       <div className="flex items-center gap-1 mb-10 overflow-x-auto">
-        {STEPS.map((s, i) => (
+        {[t.launch.stepProduct, t.launch.stepPatron, t.launch.stepCommunity, t.launch.stepKernel, t.launch.stepAgent, t.launch.stepReview].map((s, i) => (
           <button
-            key={s}
+            key={i}
             onClick={() => i <= step && setStep(i)}
             className={`px-3 py-1.5 text-xs border transition-colors whitespace-nowrap ${
               i === step
@@ -551,8 +554,8 @@ function LaunchForm() {
             <p className="text-sm text-muted mb-6">
               Register your product. Your Prime Agent will handle GTM and service delivery.
             </p>
-            <Field label="Product Name" value={form.productName} onChange={(v) => update("productName", v)} placeholder="e.g. ImageGen Pro" />
-            <Field label="Description" value={form.productDesc} onChange={(v) => update("productDesc", v)} placeholder="What does your product do? Who is it for?" multiline />
+            <Field label={t.launch.productName} value={form.productName} onChange={(v) => update("productName", v)} placeholder={t.launch.productNamePlaceholder} />
+            <Field label={t.launch.productDesc} value={form.productDesc} onChange={(v) => update("productDesc", v)} placeholder={t.launch.productDescPlaceholder} multiline />
             <div>
               <label className="block text-xs text-muted mb-2">Category</label>
               <select
@@ -848,7 +851,7 @@ function LaunchForm() {
             disabled={submitting}
             className="px-8 py-2.5 text-sm bg-accent text-background font-medium hover:bg-foreground transition-colors disabled:opacity-50"
           >
-            {submitting ? (deployStep || "Deploying...") : "Launch TALOS"}
+            {submitting ? (deployStep || t.launch.btnLaunching) : t.launch.btnLaunch}
           </button>
         )}
       </div>

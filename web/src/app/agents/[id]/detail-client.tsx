@@ -7,6 +7,7 @@ import { useWallet } from "@/components/wallet-gate";
 import { bscChain, getPublicClient, BSC_CHAIN_ID } from "@/lib/evm";
 import { AgentAvatar } from "@/components/agent-avatar";
 import { XApiCredentialsForm } from "@/components/x-api-credentials-form";
+import { useTranslation } from "@/lib/i18n";
 
 // USDC on BNB Smart Chain (18 decimals on BSC). Address from env.
 const USDC_ADDRESS = (process.env.NEXT_PUBLIC_USDC_ADDRESS ?? "") as string;
@@ -113,6 +114,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
   const [tab, setTab] = useState<Tab>("Overview");
   const [patronStatus, setPatronStatus] = useState<"none" | "loading" | "patron">("none");
   const { isConnected, connect, address, chainId, switchChain, getWalletClient } = useWallet();
+  const t = useTranslation();
 
   /**
    * Send a USDC (ERC-20) payment on BNB Smart Chain and wait for the receipt.
@@ -426,7 +428,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
       <Link href="/agents" className="text-xs text-muted hover:text-foreground transition-colors">
-        &larr; Agent Directory
+        {t.agentDetail.backToAgents}
       </Link>
 
       {/* Header */}
@@ -481,7 +483,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
                         : "bg-surface text-muted border border-border cursor-not-allowed"
                     }`}
                   >
-                    {patronStatus === "loading" ? "Registering..." : "Become Patron"}
+                    {patronStatus === "loading" ? t.agentDetail.syncing : t.agentDetail.becomePatron}
                   </button>
                   {!meetsThreshold && (
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-surface border border-border text-xs text-muted whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
@@ -534,16 +536,24 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
 
       {/* Tabs */}
       <div className="flex items-center gap-4 sm:gap-6 border-b border-border mb-8 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-        {TABS.map((t) => (
+        {([
+          { key: "Overview" as Tab, label: t.agentDetail.tabOverview },
+          { key: "Services" as Tab, label: t.agentDetail.tabServices },
+          { key: "Activity" as Tab, label: t.agentDetail.tabActivity },
+          { key: "Patrons" as Tab, label: t.agentDetail.tabPatrons },
+          { key: "Revenue" as Tab, label: t.agentDetail.tabRevenue },
+          { key: "Governance" as Tab, label: t.agentDetail.tabGovernance },
+          { key: "Agent" as Tab, label: t.agentDetail.tabAgent },
+        ]).map(({ key, label }) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
+            key={key}
+            onClick={() => setTab(key)}
             className={`pb-3 pt-1 text-sm transition-colors whitespace-nowrap shrink-0 ${
-              tab === t ? "text-accent border-b border-accent" : "text-muted hover:text-foreground"
+              tab === key ? "text-accent border-b border-accent" : "text-muted hover:text-foreground"
             }`}
           >
-            {t}
-            {t === "Services" && talos.service && (
+            {label}
+            {key === "Services" && talos.service && (
               <span className="ml-1.5 text-xs text-accent/60">1</span>
             )}
           </button>
@@ -920,7 +930,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
       {tab === "Activity" && (
         <div className="bg-surface border border-border divide-y divide-border">
           {talos.activities.length === 0 ? (
-            <div className="text-center py-12 text-muted text-sm">No activity recorded yet.</div>
+            <div className="text-center py-12 text-muted text-sm">{t.agentDetail.noActivity}</div>
           ) : (
             talos.activities.map((a) => (
               <div key={a.id} className="flex items-start gap-4 p-4 hover:bg-surface-hover transition-colors">
@@ -1000,7 +1010,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
               <span className="text-right">Share</span>
             </div>
             {talos.patrons.length === 0 ? (
-              <div className="py-12 text-center text-sm text-muted">No patrons yet. Be the first.</div>
+              <div className="py-12 text-center text-sm text-muted">{t.agentDetail.noPatrons}</div>
             ) : (
               talos.patrons.map((p, i) => (
                 <div key={i} className={`grid grid-cols-4 gap-4 px-4 py-3 border-b border-border last:border-0 transition-colors text-sm ${p.stellarPublicKey === address ? "bg-accent/5" : "hover:bg-surface-hover"}`}>
@@ -1103,7 +1113,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
           <div className="bg-surface border border-border p-6">
             <div className="text-xs text-muted mb-6">[REVENUE HISTORY]</div>
             {REVENUE_HISTORY.length === 0 ? (
-              <div className="text-center py-12 text-muted text-sm">No revenue data yet.</div>
+              <div className="text-center py-12 text-muted text-sm">{t.agentDetail.noRevenue}</div>
             ) : (
               <div className="flex items-end gap-3 h-40">
                 {REVENUE_HISTORY.map((r) => (
@@ -1211,7 +1221,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
 
           {/* Approvals list */}
           {approvalsLoaded && approvals.length === 0 && (
-            <div className="py-16 text-center text-muted text-sm">No proposals yet.</div>
+            <div className="py-16 text-center text-muted text-sm">{t.agentDetail.noProposals}</div>
           )}
           {approvals.map(a => (
             <div key={a.id} className="bg-surface border border-border p-5">

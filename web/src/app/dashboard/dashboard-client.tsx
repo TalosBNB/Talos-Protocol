@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { WalletGate, useWallet } from "@/components/wallet-gate";
 import { AgentAvatar } from "@/components/agent-avatar";
 import { XApiCredentialsForm } from "@/components/x-api-credentials-form";
+import { useTranslation } from "@/lib/i18n";
 
 interface DashboardData {
   stats: {
@@ -97,9 +98,10 @@ function TypeBadge({ type }: { type: string }) {
 }
 
 export function DashboardClient() {
+  const t = useTranslation();
   return (
     <WalletGate
-      title="Connect Wallet to Access Dashboard"
+      title={t.dashboard.title}
       description="Your patron dashboard shows your portfolio, pending approvals, and agent activity. Connect your EVM wallet to view your TALOS holdings."
     >
       <DashboardLoader />

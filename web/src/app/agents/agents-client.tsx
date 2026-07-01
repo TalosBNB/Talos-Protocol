@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { AgentAvatar } from "@/components/agent-avatar";
+import { useTranslation } from "@/lib/i18n";
 
 interface TalosListItem {
   id: string;
@@ -47,18 +48,9 @@ const CATEGORIES = [
 ] as const;
 type Category = (typeof CATEGORIES)[number];
 
-const SORT_OPTIONS = [
-  { value: "revenue", label: "Top Revenue" },
-  { value: "jobs", label: "Most Jobs" },
-  { value: "price-asc", label: "Price: Low → High" },
-  { value: "price-desc", label: "Price: High → Low" },
-  { value: "success", label: "Success Rate" },
-  { value: "recent", label: "Recently Added" },
-] as const;
-type SortOption = (typeof SORT_OPTIONS)[number]["value"];
-
 const STATUS_FILTERS = ["All", "Online", "Offline"] as const;
 type StatusFilter = (typeof STATUS_FILTERS)[number];
+type SortOption = "revenue" | "jobs" | "price-asc" | "price-desc" | "success" | "recent";
 
 function getRelativeTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
@@ -77,6 +69,16 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
   const [activeCategory, setActiveCategory] = useState<Category>("All");
   const [sortBy, setSortBy] = useState<SortOption>("revenue");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
+  const t = useTranslation();
+
+  const SORT_OPTIONS = [
+    { value: "revenue" as const, label: t.agents.sortRevenue },
+    { value: "jobs" as const, label: t.agents.sortJobs },
+    { value: "price-asc" as const, label: t.agents.sortPriceLow },
+    { value: "price-desc" as const, label: t.agents.sortPriceHigh },
+    { value: "success" as const, label: t.agents.sortSuccess },
+    { value: "recent" as const, label: t.agents.sortRecent },
+  ];
 
   const filtered = useMemo(() => {
     let result = agents.filter((item) => {
@@ -124,14 +126,14 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
       {/* Header */}
       <div className="mb-10">
-        <div className="text-sm text-muted mb-2 tracking-wide">// AGENT DIRECTORY</div>
+        <div className="text-sm text-muted mb-2 tracking-wide">{t.agents.directoryLabel}</div>
         <h1 className="text-2xl font-bold text-accent tracking-tight">
-          Discover Agent Services
+          {t.agents.title}
         </h1>
         <p className="text-sm text-muted mt-2">
-          Find and integrate AI agent services into your workflow.
-          <span className="ml-3 text-accent font-bold">{onlineCount} online</span>
-          <span className="text-muted ml-1">/ {agents.length} total</span>
+          {t.agents.subtitle}
+          <span className="ml-3 text-accent font-bold">{onlineCount} {t.agents.online}</span>
+          <span className="text-muted ml-1">/ {agents.length} {t.agents.total}</span>
         </p>
       </div>
 
@@ -144,7 +146,7 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
             </span>
             <input
               type="text"
-              placeholder="Search agents, services..."
+              placeholder={t.agents.searchPlaceholder}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full bg-surface border border-border pl-9 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted/50 focus:outline-none focus:border-accent transition-colors"
@@ -154,23 +156,27 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
           <div className="flex items-center gap-2 sm:ml-auto">
             {/* Status Filter */}
             <div className="flex border border-border">
-              {STATUS_FILTERS.map((s) => (
+              {([
+                { key: "All" as const, label: t.agents.statusAll },
+                { key: "Online" as const, label: t.agents.statusOnline },
+                { key: "Offline" as const, label: t.agents.statusOffline },
+              ]).map(({ key, label }, idx) => (
                 <button
-                  key={s}
-                  onClick={() => setStatusFilter(s)}
+                  key={key}
+                  onClick={() => setStatusFilter(key)}
                   className={`px-3 py-2 text-sm transition-colors ${
-                    statusFilter === s
+                    statusFilter === key
                       ? "bg-surface text-accent"
                       : "text-muted hover:text-foreground"
-                  } ${s !== "All" ? "border-l border-border" : ""}`}
+                  } ${idx > 0 ? "border-l border-border" : ""}`}
                 >
-                  {s === "Online" && (
+                  {key === "Online" && (
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mr-1.5" />
                   )}
-                  {s === "Offline" && (
+                  {key === "Offline" && (
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-muted/50 mr-1.5" />
                   )}
-                  {s}
+                  {label}
                 </button>
               ))}
             </div>
@@ -202,7 +208,7 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
                   : "border-border text-muted hover:text-foreground"
               }`}
             >
-              {cat}
+              {cat === "All" ? t.agents.catAll : cat}
             </button>
           ))}
         </div>
@@ -210,13 +216,13 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
 
       {/* Results count */}
       <p className="text-xs text-muted mb-6">
-        {filtered.length} agent{filtered.length !== 1 ? "s" : ""} found
+        {filtered.length} {filtered.length !== 1 ? t.agents.foundPlural : t.agents.found}
       </p>
 
       {/* Grid */}
       {filtered.length === 0 ? (
         <div className="text-center py-20 text-muted text-sm">
-          No agents match your query.
+          {t.agents.noAgents}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -290,7 +296,7 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
               <div className="mt-5 pt-4 border-t border-border">
                 <div className="flex justify-between text-sm mb-2">
                   <div>
-                    <span className="text-muted">Jobs</span>
+                    <span className="text-muted">{t.agents.jobs}</span>
                     <p className="text-foreground mt-0.5 font-medium">
                       {item.totalJobs > 0 ? (
                         <>
@@ -303,15 +309,15 @@ export function AgentsClient({ agents }: { agents: TalosListItem[] }) {
                     </p>
                   </div>
                   <div className="text-center">
-                    <span className="text-muted">Revenue</span>
+                    <span className="text-muted">{t.agents.revenue}</span>
                     <p className="text-foreground mt-0.5">{item.revenueDisplay}</p>
                   </div>
                   <div className="text-center">
-                    <span className="text-muted">Patrons</span>
+                    <span className="text-muted">{t.agents.patrons}</span>
                     <p className="text-foreground mt-0.5">{item.patrons}</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-muted">Token</span>
+                    <span className="text-muted">{t.agents.token}</span>
                     <p className="text-foreground mt-0.5">{item.pulsePriceDisplay}</p>
                   </div>
                 </div>

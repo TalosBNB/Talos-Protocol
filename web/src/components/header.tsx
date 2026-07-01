@@ -5,14 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEvmWallet } from "./providers";
 import { ThemeToggle } from "./theme-toggle";
-
-const NAV_ITEMS = [
-  { href: "/agents", label: "Agents", requiresWallet: false },
-  { href: "/activity", label: "Activity", requiresWallet: false },
-  { href: "/playbooks", label: "Playbooks", requiresWallet: false },
-  { href: "/leaderboard", label: "Leaderboard", requiresWallet: false },
-  { href: "/docs", label: "Docs", requiresWallet: false, highlight: true },
-];
+import { LocaleSwitcher } from "./locale-switcher";
+import { useTranslation } from "@/lib/i18n";
 
 const X_PROFILE_URL = "https://x.com/talosdotfun/";
 
@@ -36,6 +30,15 @@ export function Header() {
   const pathname = usePathname();
   const { isConnected, address, connect, disconnect } = useEvmWallet();
   const [menuOpen, setMenuOpen] = useState(false);
+  const t = useTranslation();
+
+  const NAV_ITEMS = [
+    { href: "/agents", label: t.nav.agents, requiresWallet: false },
+    { href: "/activity", label: t.nav.activity, requiresWallet: false },
+    { href: "/playbooks", label: t.nav.playbooks, requiresWallet: false },
+    { href: "/leaderboard", label: t.nav.leaderboard, requiresWallet: false },
+    { href: "/docs", label: t.nav.docs, requiresWallet: false, highlight: true },
+  ];
 
   const truncatedAddress = address
     ? `${address.slice(0, 6)}...${address.slice(-4)}`
@@ -71,7 +74,7 @@ export function Header() {
                 {item.highlight && <span className="text-accent/60">&lt;/&gt;</span>}
                 {item.label}
                 {item.requiresWallet && !isConnected && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/70" title="Wallet required" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/70" title={t.nav.walletRequired} />
                 )}
               </Link>
             ))}
@@ -81,8 +84,8 @@ export function Header() {
         {/* Right: desktop actions + mobile hamburger */}
         <div className="flex items-center gap-2 sm:gap-3">
           <XLogoLink />
-          {/* Theme toggle — always visible */}
           <ThemeToggle />
+          <LocaleSwitcher />
           {/* Desktop only */}
           {isConnected && (
             <Link
@@ -91,7 +94,7 @@ export function Header() {
                 pathname === "/dashboard" ? "text-nav-accent" : "text-muted hover:text-nav-foreground"
               }`}
             >
-              Dashboard
+              {t.nav.dashboard}
             </Link>
           )}
           <Link
@@ -102,7 +105,7 @@ export function Header() {
                 : "bg-accent/90 text-background hover:bg-accent"
             }`}
           >
-            Launchpad
+            {t.nav.launchpad}
           </Link>
           {isConnected ? (
             <div className="hidden md:flex items-center gap-3">
@@ -113,7 +116,7 @@ export function Header() {
                 onClick={disconnect}
                 className="text-xs text-muted hover:text-nav-foreground transition-colors"
               >
-                Disconnect
+                {t.nav.disconnect}
               </button>
             </div>
           ) : (
@@ -121,7 +124,7 @@ export function Header() {
               onClick={() => connect().catch(() => {})}
               className="hidden md:inline-flex border border-border px-4 py-2 text-sm text-nav-foreground hover:bg-surface-hover transition-colors cursor-pointer"
             >
-              Connect Wallet
+              {t.nav.connectWallet}
             </button>
           )}
 
@@ -136,7 +139,7 @@ export function Header() {
           <button
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 text-foreground"
             onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
           >
             <span
               className={`block h-px w-5 bg-current transition-transform origin-center ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
@@ -182,7 +185,7 @@ export function Header() {
                   pathname === "/dashboard" ? "text-nav-accent" : "text-muted"
                 }`}
               >
-                Dashboard
+                {t.nav.dashboard}
               </Link>
             )}
             <Link
@@ -190,7 +193,7 @@ export function Header() {
               onClick={() => setMenuOpen(false)}
               className="flex items-center px-2 py-3 text-sm text-accent font-medium border-b border-border/50"
             >
-              Launchpad →
+              {t.nav.launchpad} →
             </Link>
             <a
               href={X_PROFILE_URL}
@@ -204,20 +207,21 @@ export function Header() {
               </svg>
               @talosdotfun
             </a>
-            <div className="pt-3 pb-2">
+            <div className="flex items-center justify-between pt-3 pb-2 gap-4">
+              <LocaleSwitcher />
               {isConnected ? (
                 <button
                   onClick={() => { disconnect(); setMenuOpen(false); }}
                   className="text-xs text-muted hover:text-foreground transition-colors"
                 >
-                  Disconnect wallet
+                  {t.nav.disconnectWallet}
                 </button>
               ) : (
                 <button
                   onClick={() => { connect().catch(() => {}); setMenuOpen(false); }}
-                  className="w-full border border-border py-2.5 text-sm text-foreground hover:bg-surface transition-colors"
+                  className="flex-1 border border-border py-2.5 text-sm text-foreground hover:bg-surface transition-colors"
                 >
-                  Connect Wallet
+                  {t.nav.connectWallet}
                 </button>
               )}
             </div>

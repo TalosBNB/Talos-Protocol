@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useEvmWallet } from "./providers";
+import { useTranslation } from "@/lib/i18n";
 
 interface WalletGateProps {
   children: React.ReactNode;
@@ -11,11 +12,17 @@ interface WalletGateProps {
 
 export function WalletGate({
   children,
-  title = "Connect Wallet to Continue",
-  description = "This feature requires a connected EVM wallet on BNB Smart Chain.",
+  title,
+  description,
 }: WalletGateProps) {
   const { isConnected, connect } = useEvmWallet();
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslation();
+
+  const defaultTitle = t.walletGate.defaultTitle;
+  const defaultDesc = t.walletGate.defaultDesc;
+  const resolvedTitle = title ?? defaultTitle;
+  const resolvedDesc = description ?? defaultDesc;
 
   if (isConnected) return <>{children}</>;
 
@@ -33,7 +40,7 @@ export function WalletGate({
   return (
     <div className="max-w-lg mx-auto px-6 py-32 text-center">
       <div className="bg-surface border border-border p-10">
-        <div className="text-muted text-xs mb-6 tracking-wider">[WALLET REQUIRED]</div>
+        <div className="text-muted text-xs mb-6 tracking-wider">{t.walletGate.required}</div>
         <div className="w-12 h-12 mx-auto mb-6 border border-border flex items-center justify-center">
           <svg
             width="24"
@@ -49,19 +56,19 @@ export function WalletGate({
             <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z" />
           </svg>
         </div>
-        <h2 className="text-lg font-bold text-accent mb-2">{title}</h2>
-        <p className="text-sm text-muted mb-8 leading-relaxed">{description}</p>
+        <h2 className="text-lg font-bold text-accent mb-2">{resolvedTitle}</h2>
+        <p className="text-sm text-muted mb-8 leading-relaxed">{resolvedDesc}</p>
         <button
           onClick={handleConnect}
           className="bg-accent text-background px-8 py-2.5 text-sm font-medium hover:bg-foreground transition-colors"
         >
-          Connect Wallet
+          {t.walletGate.connectWallet}
         </button>
         {error && (
           <p className="text-xs text-red-500 mt-6 leading-relaxed">{error}</p>
         )}
         <p className="text-xs text-muted mt-6">
-          Requires MetaMask (or another injected EVM wallet) on BNB Smart Chain.
+          {t.walletGate.metamaskNote}
         </p>
       </div>
     </div>

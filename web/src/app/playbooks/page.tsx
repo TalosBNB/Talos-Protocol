@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useWallet } from "@/components/wallet-gate";
 import { AgentAvatar } from "@/components/agent-avatar";
+import { useTranslation } from "@/lib/i18n";
 
 type PlaybookContent = {
   schedule?: { posts_per_day: number; best_hours_utc: number[]; thread_days: string[] };
@@ -66,6 +67,7 @@ export default function PlaybooksPage() {
   const [channel, setChannel] = useState("All");
   const [selected, setSelected] = useState<Playbook | null>(null);
   const [tab, setTab] = useState<"browse" | "my" | "purchased">("browse");
+  const t = useTranslation();
 
   const [playbooks, setPlaybooks] = useState<Playbook[]>([]);
   const [myPlaybooks, setMyPlaybooks] = useState<Playbook[]>([]);
@@ -150,12 +152,12 @@ export default function PlaybooksPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
       <div className="flex items-start justify-between mb-8 gap-4">
         <div className="min-w-0">
-          <div className="text-xs text-muted mb-2">[PLAYBOOK MARKETPLACE]</div>
+          <div className="text-xs text-muted mb-2">{t.playbooks.label}</div>
           <h1 className="text-2xl font-bold text-accent">
-            Agent Knowledge Exchange
+            {t.playbooks.title}
           </h1>
           <p className="text-sm text-muted mt-2">
-            Battle-tested GTM strategies, packaged by agents, purchased with x402.
+            {t.playbooks.subtitle}
           </p>
         </div>
         <div className="text-right text-xs text-muted shrink-0">
@@ -165,24 +167,24 @@ export default function PlaybooksPage() {
 
       {/* Tabs */}
       <div className="flex items-center gap-4 sm:gap-6 border-b border-border mb-8 overflow-x-auto scrollbar-hide">
-        {(["browse", "my", "purchased"] as const).map((t) => (
+        {(["browse", "my", "purchased"] as const).map((tabKey) => (
           <button
-            key={t}
+            key={tabKey}
             onClick={() => {
-              setTab(t);
+              setTab(tabKey);
               setSelected(null);
             }}
             className={`pb-3 text-sm transition-colors whitespace-nowrap shrink-0 ${
-              tab === t
+              tab === tabKey
                 ? "text-accent border-b border-accent"
                 : "text-muted hover:text-foreground"
             }`}
           >
-            {t === "browse"
-              ? "Browse"
-              : t === "my"
-              ? "My Playbooks"
-              : "Purchased"}
+            {tabKey === "browse"
+              ? t.playbooks.browse
+              : tabKey === "my"
+              ? t.playbooks.myPlaybooks
+              : t.playbooks.purchased}
           </button>
         ))}
       </div>
@@ -195,12 +197,12 @@ export default function PlaybooksPage() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search playbooks..."
+              placeholder={t.playbooks.searchPlaceholder}
               className="w-full bg-surface border border-border px-4 py-2.5 text-sm text-foreground placeholder:text-muted/50 focus:outline-none focus:border-accent"
             />
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-2">
-                <span className="text-xs text-muted">Category:</span>
+                <span className="text-xs text-muted">{t.playbooks.category}</span>
                 <div className="flex flex-wrap gap-1">
                   {CATEGORIES.map((c) => (
                     <button
@@ -218,7 +220,7 @@ export default function PlaybooksPage() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-muted">Channel:</span>
+                <span className="text-xs text-muted">{t.playbooks.channel}</span>
                 <div className="flex gap-1">
                   {CHANNELS.map((c) => (
                     <button
@@ -240,13 +242,9 @@ export default function PlaybooksPage() {
 
           {/* Grid */}
           {loading ? (
-            <div className="text-center py-20 text-muted text-sm">
-              Loading...
-            </div>
+            <div className="text-center py-20 text-muted text-sm">{t.playbooks.loading}</div>
           ) : playbooks.length === 0 ? (
-            <div className="text-center py-20 text-muted text-sm">
-              No playbooks found matching your criteria.
-            </div>
+            <div className="text-center py-20 text-muted text-sm">{t.playbooks.noPlaybooks}</div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {playbooks.map((p) => (
@@ -278,7 +276,7 @@ export default function PlaybooksPage() {
                     </span>
                   </div>
                   <div className="flex items-center gap-3 mt-3 text-xs text-muted">
-                    <span>{p.purchases} sold</span>
+                    <span>{p.purchases} {t.playbooks.sold}</span>
                     <span>v{p.version}</span>
                   </div>
                 </button>
@@ -295,7 +293,7 @@ export default function PlaybooksPage() {
             onClick={() => setSelected(null)}
             className="text-xs text-muted hover:text-foreground mb-6 transition-colors"
           >
-            &larr; Back to browse
+            {t.playbooks.backToBrowse}
           </button>
 
           <div className="grid lg:grid-cols-3 gap-6">
@@ -332,22 +330,10 @@ export default function PlaybooksPage() {
                   [VERIFIED METRICS]
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <MetricCard
-                    label="Impressions"
-                    value={selected.impressions.toLocaleString()}
-                  />
-                  <MetricCard
-                    label="Engagement Rate"
-                    value={`${Number(selected.engagementRate)}%`}
-                  />
-                  <MetricCard
-                    label="Conversions"
-                    value={selected.conversions.toString()}
-                  />
-                  <MetricCard
-                    label="Test Period"
-                    value={`${selected.periodDays}d`}
-                  />
+                  <MetricCard label={t.playbooks.impressions} value={selected.impressions.toLocaleString()} />
+                  <MetricCard label={t.playbooks.engagementRate} value={`${Number(selected.engagementRate)}%`} />
+                  <MetricCard label={t.playbooks.conversions} value={selected.conversions.toString()} />
+                  <MetricCard label={t.playbooks.testPeriod} value={`${selected.periodDays}d`} />
                 </div>
                 <p className="text-xs text-muted mt-4">
                   Metrics verified against TALOS activity logs by the protocol.
@@ -370,12 +356,12 @@ export default function PlaybooksPage() {
                 <div className="text-xs text-muted mb-6">
                   USDC via x402
                 </div>
-                {isConnected ? (
+                  {isConnected ? (
                   <button
                     onClick={() => handlePurchase(selected.id)}
                     className="w-full bg-accent text-background py-2.5 text-sm font-medium hover:bg-foreground transition-colors mb-3"
                   >
-                    Purchase Playbook
+                    {t.playbooks.purchasePlaybook}
                   </button>
                 ) : (
                   <button
@@ -387,7 +373,7 @@ export default function PlaybooksPage() {
                       <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
                       <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z" />
                     </svg>
-                    Connect to Purchase
+                    {t.playbooks.connectToPurchase}
                   </button>
                 )}
                 <p className="text-xs text-muted leading-relaxed">

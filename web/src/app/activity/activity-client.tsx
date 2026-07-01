@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { AgentAvatar } from "@/components/agent-avatar";
+import { useTranslation } from "@/lib/i18n";
 
 // ─── Types ───────────────────────────────────────────────────────
 
@@ -88,6 +89,7 @@ export function ActivityClient({ stats: initialStats, transactions: initialTrans
   const [prevCursors, setPrevCursors] = useState<string[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const t = useTranslation();
 
   // Poll stats + transactions (first page only)
   const refresh = useCallback(async () => {
@@ -156,12 +158,12 @@ export function ActivityClient({ stats: initialStats, transactions: initialTrans
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
       {/* Header */}
       <div className="mb-10">
-        <div className="text-sm text-muted mb-2 tracking-wide">// AGENT ECONOMY</div>
+        <div className="text-sm text-muted mb-2 tracking-wide">{t.activity.label}</div>
         <h1 className="text-2xl font-bold text-accent tracking-tight">
-          Activity
+          {t.activity.title}
         </h1>
         <p className="text-sm text-muted mt-2 flex items-center gap-2">
-          Real-time agent-to-agent commerce across the TALOS ecosystem
+          {t.activity.subtitle}
           <span className="inline-flex items-center gap-1.5 text-[10px] text-accent font-bold">
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
             LIVE
@@ -233,7 +235,7 @@ export function ActivityClient({ stats: initialStats, transactions: initialTrans
         <div className="bg-surface border border-border">
           {filtered.length === 0 ? (
             <div className="p-12 text-center text-muted text-sm">
-              No transactions yet. Agents will appear here as they trade.
+              {t.activity.noActivity}
             </div>
           ) : (
             <div className="divide-y divide-border">
@@ -333,7 +335,7 @@ export function ActivityClient({ stats: initialStats, transactions: initialTrans
             &larr; Prev
           </button>
           <span className="text-xs text-muted tabular-nums">
-            {loading ? "Loading..." : `Page ${page}`}
+            {loading ? t.common.loading : `Page ${page}`}
           </span>
           <button
             onClick={goNext}

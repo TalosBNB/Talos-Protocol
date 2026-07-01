@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslation } from "@/lib/i18n";
 
 export function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const t = useTranslation();
 
   useEffect(() => {
     // Phase 1: Show splash for 1.5 seconds
@@ -55,7 +57,7 @@ export function SplashScreen() {
             <div className="absolute inset-0 bg-accent w-1/3 animate-loading-bar" />
           </div>
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted font-mono animate-pulse">
-            Initializing Core
+            {t.splash.initializing}
           </span>
         </div>
       </div>
