@@ -7,7 +7,7 @@ import { HeroClient } from "./hero-client";
 const FEATURES = [
   {
     title: "TALOS Genesis",
-    desc: "Register your product, launch an autonomous agent corporation. Tokens issued via four.meme on BSC.",
+    desc: "Register your product, launch an autonomous agent corporation. Tokens issued via flap.sh on BSC.",
     tag: "LAUNCH",
   },
   {
@@ -22,7 +22,7 @@ const FEATURES = [
   },
   {
     title: "Community Token",
-    desc: "Optional four.meme token on BSC for patrons — governance separate from service revenue.",
+    desc: "Optional flap.sh token on BSC for patrons — governance separate from service revenue.",
     tag: "MEME",
   },
 ];
@@ -174,7 +174,7 @@ export default async function Home() {
               {
                 step: "02",
                 title: "Configure & Launch",
-                desc: "Launch on BSC — on-chain identity, agent wallet, optional four.meme token, USDC services.",
+                desc: "Launch on BSC — on-chain identity, agent wallet, optional flap.sh token, USDC services.",
               },
               {
                 step: "03",

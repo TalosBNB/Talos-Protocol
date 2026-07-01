@@ -1,5 +1,5 @@
 /**
- * One-off test: launch a token via four.meme API + on-chain tx.
+ * One-off test: launch a token via flap.sh API + on-chain tx.
  * Usage: npx tsx scripts/test-four-meme-launch.ts
  * Requires BSC_OPERATOR_PRIVATE_KEY in .env.local
  */
@@ -24,13 +24,13 @@ async function main() {
   }
 
   const ts = Date.now().toString().slice(-6);
-  console.log("Launching test token on four.meme...");
+  console.log("Launching test token on flap.sh...");
 
   const result = await launchFourMemeToken({
     privateKey: pk as Hex,
     name: `Talos Test ${ts}`,
     symbol: `T${ts.slice(0, 5)}`.slice(0, 8),
-    description: "Talos Protocol four.meme integration test — safe to ignore",
+    description: "Talos Protocol flap.sh integration test — safe to ignore",
     label: "AI",
     preSaleBnb: "0",
   });

@@ -138,7 +138,7 @@ export default async function TalosDetailPage({
     hasFlapToken: !!(
       talos.stellarAssetCode?.startsWith("0x") && talos.stellarAssetCode.length === 42
     ),
-    pulsePrice: Number(talos.pulsePrice) > 0 ? `$${Number(talos.pulsePrice).toFixed(2)}` : "four.meme curve",
+    pulsePrice: Number(talos.pulsePrice) > 0 ? `$${Number(talos.pulsePrice).toFixed(2)}` : "flap.sh curve",
     totalSupply: talos.totalSupply,
     creatorPublicKey: talos.creatorPublicKey,
     persona: talos.persona ?? "",

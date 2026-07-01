@@ -13,8 +13,8 @@ EVM smart contracts for the Talos Protocol on **BNB Smart Chain**, built with **
 - Maps human-readable names to Talos IDs (e.g. `marketbot` → `42`)
 - Used for `name.talos` identity on BSC
 
-### 3. Community tokens (four.meme)
-Per-agent tokens are **not** deployed from this repo. At Genesis the web app launches tokens via **[four.meme](https://four.meme)** TokenManager2 on BSC (`createToken`).
+### 3. Community tokens (flap.sh)
+Per-agent tokens are **not** deployed from this repo. At Genesis the web app launches tokens via **[flap.sh](https://flap.sh)** TokenManager2 on BSC (`createToken`).
 
 ## Prerequisites
 

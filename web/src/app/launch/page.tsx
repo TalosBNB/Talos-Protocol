@@ -410,7 +410,7 @@ function LaunchForm() {
 
           {genesisResult.memeLaunched && genesisResult.memeUrl ? (
             <div>
-              <div className="text-xs text-accent font-bold mb-2">four.meme token live</div>
+              <div className="text-xs text-accent font-bold mb-2">flap.sh token live</div>
               <a
                 href={genesisResult.memeUrl}
                 target="_blank"
@@ -422,7 +422,7 @@ function LaunchForm() {
             </div>
           ) : !genesisResult.memeLaunched && genesisResult.memeSkipReason ? (
             <div className="p-3 border border-border bg-background text-xs text-muted">
-              four.meme token not launched: {genesisResult.memeSkipReason}
+              flap.sh token not launched: {genesisResult.memeSkipReason}
             </div>
           ) : null}
 
@@ -627,7 +627,7 @@ function LaunchForm() {
             <h2 className="text-lg font-bold text-accent mb-1">Community Token (optional)</h2>
             <p className="text-sm text-muted mb-4">
               Service revenue goes to your <strong className="text-foreground">agent wallet in USDC</strong> — separate from this.
-              A four.meme token is for patrons and community governance.
+              A flap.sh token is for patrons and community governance.
             </p>
             <label className="flex items-start gap-3 p-4 border border-border bg-background cursor-pointer">
               <input
@@ -637,7 +637,7 @@ function LaunchForm() {
                 className="mt-1"
               />
               <span className="text-sm">
-                <span className="text-foreground font-medium block">Launch four.meme token on BSC</span>
+                <span className="text-foreground font-medium block">Launch flap.sh token on BSC</span>
                 <span className="text-muted text-xs">Recommended for patron governance. Requires operator BNB in server env.</span>
               </span>
             </label>
@@ -646,14 +646,14 @@ function LaunchForm() {
                 <Field label="Token Name" value={form.tokenName} onChange={(v) => update("tokenName", v)} placeholder="e.g. ImageGen Agent" />
                 <div>
                   <Field label="Token Symbol" value={form.tokenSymbol} onChange={(v) => update("tokenSymbol", v.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8))} placeholder="e.g. IMGS" />
-                  <p className="text-xs text-muted mt-1">2-8 characters. Traded on four.meme with BNB.</p>
+                  <p className="text-xs text-muted mt-1">2-8 characters. Traded on flap.sh with BNB.</p>
                 </div>
                 <div>
                   <Field label="Reference Supply" value={form.totalSupply} onChange={(v) => update("totalSupply", v)} type="number" />
                   <p className="text-xs text-muted mt-1">Patron threshold = 0.1% of this. Max 100,000,000.</p>
                 </div>
                 <div className="p-4 border border-border bg-background text-xs text-muted">
-                  Bonding curve pricing on four.meme — not a fixed USDC price.
+                  Bonding curve pricing on flap.sh — not a fixed USDC price.
                 </div>
               </>
             ) : (
@@ -765,7 +765,7 @@ function LaunchForm() {
                 label="Community token"
                 value={
                   form.enableFlapToken
-                    ? `${form.tokenName} (${form.tokenSymbol}) — four.meme on BSC`
+                    ? `${form.tokenName} (${form.tokenSymbol}) — flap.sh on BSC`
                     : "Skipped — service-only agent"
                 }
               />

@@ -38,7 +38,7 @@ export const createTalosSchema = z.object({
   minPatronPulse: z.number().int().nonnegative().nullable().optional(),
   stellarAssetCode: z.string().nullable().optional(),
   tokenSymbol: z.string().max(20).nullable().optional(),
-  /** When true (default), launch a four.meme community token at Genesis if tokenSymbol is set. */
+  /** When true (default), launch a flap.sh community token at Genesis if tokenSymbol is set. */
   launchFlapToken: z.boolean().optional().default(true),
   // Optional commerce service
   serviceName: z.string().min(1).max(200).optional(),

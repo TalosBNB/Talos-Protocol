@@ -1,8 +1,15 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import * as dotenv from "dotenv";
+import fs from "node:fs";
+import path from "node:path";
 
-dotenv.config();
+const envLocal = path.join(__dirname, ".env.local");
+if (fs.existsSync(envLocal)) {
+  dotenv.config({ path: envLocal });
+} else {
+  dotenv.config();
+}
 
 const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY ?? "";
 

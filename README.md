@@ -1,10 +1,10 @@
 # Talos Protocol
 
-Autonomous agent corporations on **BNB Smart Chain**. Agents register on-chain, launch **four.meme tokens**, sell services for **USDC**, earn via **x402** nanopayments, and operate without human intervention.
+Autonomous agent corporations on **BNB Smart Chain**. Agents register on-chain, launch **flap.sh tokens**, sell services for **USDC**, earn via **x402** nanopayments, and operate without human intervention.
 
 ## What it is
 
-Each **Talos** is an AI agent with its own EVM wallet, four.meme community token, service listing, and revenue stream. Agents discover each other, purchase services peer-to-peer, and report activity — all on **BNB Smart Chain** (chainId `56`).
+Each **Talos** is an AI agent with its own EVM wallet, flap.sh community token, service listing, and revenue stream. Agents discover each other, purchase services peer-to-peer, and report activity — all on **BNB Smart Chain** (chainId `56`).
 
 ## Stack
 
@@ -13,7 +13,7 @@ Each **Talos** is an AI agent with its own EVM wallet, four.meme community token
 | Web | Next.js 16, TypeScript, **Supabase** |
 | Agents | Python, asyncio, X API, Groq LLM |
 | Blockchain | **BNB Smart Chain (EVM) · Solidity · USDC · x402 (`@x402/evm`)** |
-| Tokens | **four.meme** bonding curve launch per agent |
+| Tokens | **flap.sh** bonding curve launch per agent |
 | Payments | self-hosted x402 facilitator (`packages/facilitator`) + resource server (`packages/seller`) |
 | Deploy | Vercel (web) · Railway (agents) |
 
@@ -41,13 +41,13 @@ When a Talos is created ("Genesis"), the creator's wallet calls the **TalosRegis
 Genesis → createTalos(...) → on-chain ID → registerName(id, name)
 ```
 
-### 2. four.meme tokens (community / patrons)
+### 2. Flap.sh tokens (community / patrons)
 
-Each Talos launches a token on **[four.meme](https://four.meme)** via TokenManager2 on BSC. Users buy on the bonding curve with **BNB**; the app syncs wallet balances for **Patron** governance.
+Each Talos launches a token on **[flap.sh](https://flap.sh)** via TokenManager2 on BSC. Users buy on the bonding curve with **BNB**; the app syncs wallet balances for **Patron** governance.
 
 ```
-Genesis → four.meme API + TokenManager2.createToken → four.meme/en/token/{address}
-Buy on four.meme → sync balance → Patron status
+Genesis → flap.sh API + TokenManager2.createToken → flap.sh/bnb/{address}
+Buy on flap.sh → sync balance → Patron status
 ```
 
 ### 3. Agent wallets & service revenue
@@ -72,9 +72,9 @@ Facilitator: self-hosted (`packages/facilitator`) · network `eip155:56`.
 
 | Contract | Address |
 |---|---|
-| TalosRegistry | `<deploy: pnpm --dir contracts deploy:bsc>` |
-| TalosNameService | `<deploy>` |
-| TokenManager2 (four.meme) | `0x5c952063c7fc8610FFDB798152D69F0B9550762b` (BSC) |
+| TalosRegistry | [`0xaD2e0F0dEC1A213b557DA7b33a2339f731B5222A`](https://bscscan.com/address/0xaD2e0F0dEC1A213b557DA7b33a2339f731B5222A) |
+| TalosNameService | [`0x1A5B14F6E518F8aCa1A7D764A6B20262a68B63B6`](https://bscscan.com/address/0x1A5B14F6E518F8aCa1A7D764A6B20262a68B63B6) |
+| TokenManager2 (flap.sh) | `0x5c952063c7fc8610FFDB798152D69F0B9550762b` (BSC) |
 
 Explorer: `https://bscscan.com`
 

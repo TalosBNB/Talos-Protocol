@@ -169,10 +169,10 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
 
   const memeUrl =
     talos.stellarAssetCode?.startsWith("0x")
-      ? `https://four.meme/en/token/${talos.stellarAssetCode}`
+      ? `https://flap.sh/bnb/${talos.stellarAssetCode}`
       : null;
   const priceDisplay =
-    parseFloat(talos.pulsePrice.replace("$", "")) > 0 ? talos.pulsePrice : "four.meme curve";
+    parseFloat(talos.pulsePrice.replace("$", "")) > 0 ? talos.pulsePrice : "flap.sh curve";
 
   const syncPatronFromChain = useCallback(async () => {
     if (!address) return null;
@@ -200,7 +200,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
         if (data.patronStatus === "registered" || data.patronStatus === "updated") {
           setPatronStatus("patron");
         } else {
-          alert(data.message || `Buy at least ${minRequired.toLocaleString()} ${talos.tokenSymbol} on four.meme first.`);
+          alert(data.message || `Buy at least ${minRequired.toLocaleString()} ${talos.tokenSymbol} on flap.sh first.`);
           setPatronStatus("none");
         }
       } else {
@@ -395,7 +395,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
 
   const handleOpenMeme = useCallback(() => {
     if (!memeUrl) {
-      alert("Token not launched on four.meme yet.");
+      alert("Token not launched on flap.sh yet.");
       return;
     }
     window.open(memeUrl, "_blank", "noopener,noreferrer");
@@ -410,7 +410,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
         setBuyResult({ message: data.message, balance: data.onChainBalance });
         setBuyStatus("success");
       } else {
-        alert(data?.error || data?.message || "Sync failed — buy on four.meme first, then try again.");
+        alert(data?.error || data?.message || "Sync failed — buy on flap.sh first, then try again.");
         setBuyStatus("error");
       }
     } catch (err: unknown) {
@@ -734,7 +734,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
                       <span className="text-foreground">Governance + Access</span>
                     </div>
                     <div className="pt-2 border-t border-border text-muted leading-relaxed">
-                      Service revenue stays in the agent wallet. Optional {talos.tokenSymbol} token is for patron governance on four.meme.
+                      Service revenue stays in the agent wallet. Optional {talos.tokenSymbol} token is for patron governance on flap.sh.
                     </div>
                   </>
                 )}
@@ -752,7 +752,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
                 {talos.hasFlapToken ? (
                   <>
                     <div className="flex justify-between gap-2">
-                      <span className="text-muted shrink-0">four.meme Token</span>
+                      <span className="text-muted shrink-0">flap.sh Token</span>
                       <span className="text-foreground font-mono truncate text-right">
                         {`${talos.stellarAssetCode.slice(0, 6)}…${talos.stellarAssetCode.slice(-4)}`}
                       </span>
@@ -1412,13 +1412,13 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
                 </button>
               </div>
             ) : (
-              /* ─── four.meme purchase flow ─── */
+              /* ─── flap.sh purchase flow ─── */
               <div className="px-6 py-6 space-y-5">
                 <div className="flex items-center gap-3">
                   <AgentAvatar name={talos.agentName || talos.name} size={36} />
                   <div>
                     <div className="text-sm font-bold text-foreground">{talos.name}</div>
-                    <div className="text-xs text-muted">{talos.tokenSymbol} &middot; four.meme bonding curve on BSC</div>
+                    <div className="text-xs text-muted">{talos.tokenSymbol} &middot; flap.sh bonding curve on BSC</div>
                   </div>
                 </div>
 
@@ -1434,7 +1434,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
                 </div>
 
                 <p className="text-xs text-muted">
-                  Buy {talos.tokenSymbol} on four.meme using BNB. After your purchase confirms, sync your wallet here to register as a Patron.
+                  Buy {talos.tokenSymbol} on flap.sh using BNB. After your purchase confirms, sync your wallet here to register as a Patron.
                 </p>
 
                 <button
@@ -1446,7 +1446,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
                       : "bg-surface text-muted border border-border cursor-not-allowed"
                   }`}
                 >
-                  {memeUrl ? `Buy on four.meme` : "Token launching soon"}
+                  {memeUrl ? `Buy on flap.sh` : "Token launching soon"}
                 </button>
 
                 <button
@@ -1458,7 +1458,7 @@ export function TalosDetailClient({ talos }: { talos: TalosDetail }) {
                 </button>
 
                 <p className="text-xs text-muted/50 text-center">
-                  BNB Smart Chain mainnet &mdash; trade on four.meme, sync patron status here
+                  BNB Smart Chain mainnet &mdash; trade on flap.sh, sync patron status here
                 </p>
               </div>
             )}

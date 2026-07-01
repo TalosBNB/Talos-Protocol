@@ -4,7 +4,7 @@ import { getErc20Balance } from "@/lib/evm";
 import { fourMemeTradeUrl } from "@/lib/four-meme";
 
 /**
- * four.meme token patron flow — buy on four.meme, sync patron status here.
+ * flap.sh token patron flow — buy on flap.sh, sync patron status here.
  *
  * GET  — trade URL + min patron threshold
  * POST — verify on-chain token balance, upsert patron record (no treasury sale)
@@ -24,7 +24,7 @@ export async function GET(
     return NextResponse.json({ error: "TALOS not found" }, { status: 404 });
   }
   if (!talos.stellarAssetCode?.startsWith("0x")) {
-    return NextResponse.json({ error: "Token not launched on four.meme yet" }, { status: 400 });
+    return NextResponse.json({ error: "Token not launched on flap.sh yet" }, { status: 400 });
   }
 
   const minForPatron = talos.minPatronPulse ?? Math.floor((talos.totalSupply ?? 1_000_000) * 0.001);
@@ -36,7 +36,7 @@ export async function GET(
     memeUrl: tradeUrl,
     flapUrl: tradeUrl,
     minPatronTokens: minForPatron,
-    message: "Buy on four.meme, then POST here to sync patron status from your wallet balance.",
+    message: "Buy on flap.sh, then POST here to sync patron status from your wallet balance.",
   });
 }
 
@@ -65,7 +65,7 @@ export async function POST(
 
   const tokenAddress = talos.stellarAssetCode;
   if (!tokenAddress?.startsWith("0x")) {
-    return NextResponse.json({ error: "Token not launched on four.meme yet" }, { status: 400 });
+    return NextResponse.json({ error: "Token not launched on flap.sh yet" }, { status: 400 });
   }
 
   const balanceStr = await getErc20Balance(tokenAddress, buyerPublicKey, 18);
@@ -74,7 +74,7 @@ export async function POST(
   if (balance <= 0) {
     return NextResponse.json(
       {
-        error: "No tokens held — buy on four.meme first",
+        error: "No tokens held — buy on flap.sh first",
         memeUrl: tradeUrl,
         flapUrl: tradeUrl,
       },
@@ -126,9 +126,9 @@ export async function POST(
       ? existingPatron
         ? "updated"
         : "registered"
-      : `pending (need ${minForPatron - balance} more ${tokenSymbol} on four.meme)`,
+      : `pending (need ${minForPatron - balance} more ${tokenSymbol} on flap.sh)`,
     message: becomesPatron
       ? `Patron synced — ${balance.toLocaleString()} ${tokenSymbol} held`
-      : `Balance recorded — buy ${minForPatron - balance} more ${tokenSymbol} on four.meme to become a Patron`,
+      : `Balance recorded — buy ${minForPatron - balance} more ${tokenSymbol} on flap.sh to become a Patron`,
   });
 }

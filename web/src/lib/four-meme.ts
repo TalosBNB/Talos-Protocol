@@ -1,5 +1,5 @@
 /**
- * four.meme token launch on BNB Smart Chain (TokenManager2.createToken).
+ * flap.sh token launch on BNB Smart Chain (TokenManager2.createToken).
  * Flow: API auth → upload image → create → on-chain tx.
  */
 
@@ -51,9 +51,12 @@ const VALID_LABELS = [
   "Others",
 ] as const;
 
-export function fourMemeTradeUrl(tokenAddress: string): string {
-  return `https://four.meme/en/token/${tokenAddress}`;
+export function flapTradeUrl(tokenAddress: string): string {
+  return `https://flap.sh/bnb/${tokenAddress}`;
 }
+
+/** @deprecated use flapTradeUrl */
+export const fourMemeTradeUrl = flapTradeUrl;
 
 function apiOk(code: unknown): boolean {
   return code === "0" || code === 0;
@@ -83,7 +86,7 @@ async function fourMemeLogin(
   });
   const nonceData = (await nonceRes.json()) as { code: unknown; data?: string };
   if (!apiOk(nonceData.code) || !nonceData.data) {
-    throw new Error(`four.meme nonce failed: ${JSON.stringify(nonceData)}`);
+    throw new Error(`flap.sh nonce failed: ${JSON.stringify(nonceData)}`);
   }
 
   const message = `You are sign in Meme ${nonceData.data}`;
@@ -108,7 +111,7 @@ async function fourMemeLogin(
   });
   const loginData = (await loginRes.json()) as { code: unknown; data?: string };
   if (!apiOk(loginData.code) || !loginData.data) {
-    throw new Error(`four.meme login failed: ${JSON.stringify(loginData)}`);
+    throw new Error(`flap.sh login failed: ${JSON.stringify(loginData)}`);
   }
 
   return { accessToken: loginData.data, address };
@@ -125,7 +128,7 @@ async function uploadImage(accessToken: string): Promise<string> {
   });
   const uploadData = (await uploadRes.json()) as { code: unknown; data?: string };
   if (!apiOk(uploadData.code) || !uploadData.data) {
-    throw new Error(`four.meme image upload failed: ${JSON.stringify(uploadData)}`);
+    throw new Error(`flap.sh image upload failed: ${JSON.stringify(uploadData)}`);
   }
   return uploadData.data;
 }
@@ -141,17 +144,17 @@ type RaisedToken = {
 async function getRaisedToken(): Promise<RaisedToken> {
   const configRes = await fetch(`${API_BASE}/public/config`);
   if (!configRes.ok) {
-    throw new Error(`four.meme public config failed: ${configRes.status}`);
+    throw new Error(`flap.sh public config failed: ${configRes.status}`);
   }
   const configData = (await configRes.json()) as { code: unknown; data?: RaisedToken[] };
   if (!apiOk(configData.code) || !Array.isArray(configData.data) || configData.data.length === 0) {
-    throw new Error(`four.meme invalid public config: ${JSON.stringify(configData)}`);
+    throw new Error(`flap.sh invalid public config: ${JSON.stringify(configData)}`);
   }
   const published = configData.data.filter((c) => c.status === "PUBLISH");
   const list = published.length > 0 ? published : configData.data;
   const raisedToken = list.find((c) => c.symbol === "BNB") ?? list[0];
   if (!raisedToken?.symbol) {
-    throw new Error("four.meme public config missing raisedToken");
+    throw new Error("flap.sh public config missing raisedToken");
   }
   return raisedToken;
 }
@@ -177,7 +180,7 @@ function parseTokenCreateAddress(receipt: { logs: readonly { address: Address; d
       // not TokenCreate
     }
   }
-  throw new Error("four.meme TokenCreate event not found in receipt");
+  throw new Error("flap.sh TokenCreate event not found in receipt");
 }
 
 export async function launchFourMemeToken(opts: {
@@ -210,7 +213,7 @@ export async function launchFourMemeToken(opts: {
   const body: Record<string, unknown> = {
     name: opts.name,
     shortName: opts.symbol,
-    desc: opts.description || `${opts.name} ($${opts.symbol}) — Talos agent token on four.meme`,
+    desc: opts.description || `${opts.name} ($${opts.symbol}) — Talos agent token on flap.sh`,
     totalSupply,
     raisedAmount,
     saleRate,
@@ -244,7 +247,7 @@ export async function launchFourMemeToken(opts: {
     data?: { createArg: string; signature: string };
   };
   if (!apiOk(createData.code) || !createData.data) {
-    throw new Error(`four.meme create API failed: ${JSON.stringify(createData)}`);
+    throw new Error(`flap.sh create API failed: ${JSON.stringify(createData)}`);
   }
 
   const createArgHex = toHex(createData.data.createArg);
@@ -278,7 +281,7 @@ export async function launchFourMemeToken(opts: {
 
   const receipt = await publicClient.waitForTransactionReceipt({ hash });
   if (receipt.status !== "success") {
-    throw new Error("four.meme createToken transaction reverted");
+    throw new Error("flap.sh createToken transaction reverted");
   }
 
   const tokenAddress = parseTokenCreateAddress(receipt);

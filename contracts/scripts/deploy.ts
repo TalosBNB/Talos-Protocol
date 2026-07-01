@@ -6,7 +6,7 @@ import { ethers } from "hardhat";
  *   1. TalosRegistry(protocolWallet)
  *   2. TalosNameService()
  *
- * MitosToken is legacy — community tokens launch via four.meme from the web layer.
+ * MitosToken is legacy — community tokens launch via flap.sh from the web layer.
  *
  * Run: pnpm --dir contracts deploy:bsc
  */

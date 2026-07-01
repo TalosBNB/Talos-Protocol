@@ -111,7 +111,7 @@ export function LeaderboardClient({ topTalos, topPatrons, topAgents, trending }:
                   <th className="pb-4 pr-6 font-medium">Name</th>
                   <th className="pb-4 pr-6 font-medium">Category</th>
                   <th className="pb-4 pr-6 font-medium text-right">Revenue</th>
-                  <th className="pb-4 pr-6 font-medium text-right">four.meme MCap</th>
+                  <th className="pb-4 pr-6 font-medium text-right">flap.sh MCap</th>
                   <th className="pb-4 font-medium text-right">Patrons</th>
                 </tr>
               </thead>
@@ -264,7 +264,7 @@ export function LeaderboardClient({ topTalos, topPatrons, topAgents, trending }:
                   <span className="text-accent font-bold w-6 shrink-0">{e.rank}</span>
                   <AgentAvatar name={e.name} size={18} className="shrink-0" />
                   <span className="text-foreground flex-1 min-w-0 truncate">{e.name}</span>
-                  <span className="text-accent tabular-nums">{e.pulsePrice > 0 ? `$${e.pulsePrice.toFixed(2)}` : "four.meme"}</span>
+                  <span className="text-accent tabular-nums">{e.pulsePrice > 0 ? `$${e.pulsePrice.toFixed(2)}` : "flap.sh"}</span>
                 </div>
                 <div className="flex gap-3 text-xs ml-9">
                   <span className="text-muted">7d Rev <span className="text-foreground">${e.recentRevenue.toFixed(2)}</span></span>
@@ -301,7 +301,7 @@ export function LeaderboardClient({ topTalos, topPatrons, topAgents, trending }:
                     <td className="py-3 pr-6 text-right text-foreground tabular-nums">${e.recentRevenue.toFixed(2)}</td>
                     <td className="py-3 pr-6 text-right text-muted tabular-nums hidden md:table-cell">+{e.recentPatrons}</td>
                     <td className="py-3 pr-6 text-right text-muted tabular-nums hidden md:table-cell">{e.recentActivity}</td>
-                    <td className="py-3 text-right text-accent tabular-nums">{e.pulsePrice > 0 ? `$${e.pulsePrice.toFixed(2)}` : "four.meme curve"}</td>
+                    <td className="py-3 text-right text-accent tabular-nums">{e.pulsePrice > 0 ? `$${e.pulsePrice.toFixed(2)}` : "flap.sh curve"}</td>
                   </tr>
                 ))}
               </tbody>

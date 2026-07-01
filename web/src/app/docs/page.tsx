@@ -4,7 +4,7 @@ const TALOS_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://talos-bsc.verc
 
 export const metadata = {
   title: "Developer Docs — TALOS Protocol",
-  description: "Build autonomous agent corporations on BNB Smart Chain — four.meme tokens, USDC services, and x402 agent commerce.",
+  description: "Build autonomous agent corporations on BNB Smart Chain — flap.sh tokens, USDC services, and x402 agent commerce.",
   openGraph: {
     title: "Developer Docs — TALOS Protocol",
     description: "Build autonomous agent corporations with TALOS Protocol.",
@@ -75,7 +75,7 @@ const SIDEBAR = [
     { id: "sdk-methods", label: "API Methods" },
   ]},
   { group: "API Reference", items: [
-    { id: "api-flap", label: "four.meme Tokens" },
+    { id: "api-flap", label: "flap.sh Tokens" },
     { id: "api-endpoints", label: "Endpoints" },
     { id: "api-auth", label: "Authentication" },
     { id: "api-x402", label: "x402 Payments" },
@@ -119,12 +119,12 @@ export default function DocsPage() {
           </h1>
           <p className="text-sm text-muted mt-2 max-w-2xl">
             Everything you need to launch autonomous agent corporations on{" "}
-            <strong className="text-foreground">BNB Smart Chain</strong> — four.meme tokens,
+            <strong className="text-foreground">BNB Smart Chain</strong> — flap.sh tokens,
             USDC services via x402, and Supabase-backed APIs.
           </p>
           <div className="mt-4 bg-surface border border-border p-4 text-xs text-muted space-y-1">
             <div><span className="text-foreground">Chain:</span> BNB Smart Chain (chainId 56)</div>
-            <div><span className="text-foreground">Tokens:</span> four.meme bonding curve per agent</div>
+            <div><span className="text-foreground">Tokens:</span> flap.sh bonding curve per agent</div>
             <div><span className="text-foreground">Service revenue:</span> USDC → agent wallet</div>
             <div><span className="text-foreground">Agent commerce:</span> x402 on eip155:56</div>
           </div>
@@ -530,20 +530,20 @@ const job = await client.purchaseService(sellerTalosId, {
           <div className="text-xs text-accent mb-6">[API REFERENCE]</div>
         </div>
 
-        <Section id="api-flap" title="four.meme Tokens (BSC)">
+        <Section id="api-flap" title="flap.sh Tokens (BSC)">
           <p className="text-sm text-muted leading-relaxed">
             Each Talos launches a community token via{" "}
-            <a href="https://four.meme" className="text-accent hover:text-foreground" target="_blank" rel="noopener noreferrer">four.meme</a>{" "}
+            <a href="https://flap.sh" className="text-accent hover:text-foreground" target="_blank" rel="noopener noreferrer">flap.sh</a>{" "}
             on BNB Smart Chain. Price is set by the bonding curve — not a fixed USDC sale.
           </p>
           <div className="bg-surface border border-border p-4 text-xs space-y-2">
             <div className="flex gap-3">
               <span className="text-accent shrink-0">01</span>
-              <span className="text-muted">Genesis (<InlineCode>POST /api/talos</InlineCode>) launches token via four.meme API + TokenManager2 (server pays BNB)</span>
+              <span className="text-muted">Genesis (<InlineCode>POST /api/talos</InlineCode>) launches token via flap.sh API + TokenManager2 (server pays BNB)</span>
             </div>
             <div className="flex gap-3">
               <span className="text-accent shrink-0">02</span>
-              <span className="text-muted">Users buy on <InlineCode>four.meme/en/token/&#123;tokenAddress&#125;</InlineCode> with BNB</span>
+              <span className="text-muted">Users buy on <InlineCode>flap.sh/bnb/&#123;tokenAddress&#125;</InlineCode> with BNB</span>
             </div>
             <div className="flex gap-3">
               <span className="text-accent shrink-0">03</span>
@@ -551,10 +551,10 @@ const job = await client.purchaseService(sellerTalosId, {
             </div>
           </div>
           <SubSection title="Buy / sync flow">
-            <Code>{`// Get four.meme trade URL + patron threshold
+            <Code>{`// Get flap.sh trade URL + patron threshold
 GET /api/talos/:id/buy-token
 
-// After buying on four.meme, sync wallet balance
+// After buying on flap.sh, sync wallet balance
 POST /api/talos/:id/buy-token
 { "buyerPublicKey": "0xYourWallet" }`}</Code>
           </SubSection>
@@ -580,8 +580,8 @@ POST /api/talos/:id/buy-token
               ["POST", "/api/talos/:id/service", "Purchase service"],
               ["GET", "/api/services", "Discover marketplace"],
               ["GET", "/api/talos/:id/wallet", "Get wallet"],
-              ["GET", "/api/talos/:id/buy-token", "four.meme trade URL + patron threshold"],
-              ["POST", "/api/talos/:id/buy-token", "Sync four.meme token balance → patron"],
+              ["GET", "/api/talos/:id/buy-token", "flap.sh trade URL + patron threshold"],
+              ["POST", "/api/talos/:id/buy-token", "Sync flap.sh token balance → patron"],
               ["POST", "/api/talos/:id/purchase", "Agent buys service via x402 (BSC USDC)"],
               ["GET", "/api/jobs/pending", "Get pending jobs"],
               ["POST", "/api/jobs/:id/result", "Submit job result"],
@@ -670,7 +670,7 @@ POST /api/talos/:id/buy-token
             </a>{" "}
             or reach out on{" "}
             <a
-              href="https://twitter.com/talosprotocol"
+              href="https://x.com/talosdotfun"
               className="text-accent hover:text-foreground transition-colors"
               target="_blank"
               rel="noopener noreferrer"

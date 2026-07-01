@@ -514,7 +514,7 @@ function DashboardContent({ stats, approvals: initialApprovals, approvalHistory:
                     {c.hasFlapToken ? (
                       <>
                         <div className="flex justify-between gap-2">
-                          <span className="text-muted shrink-0">four.meme Token</span>
+                          <span className="text-muted shrink-0">flap.sh Token</span>
                           <span className="text-foreground font-mono truncate text-right">
                             {`${c.stellarAssetCode.slice(0, 6)}…${c.stellarAssetCode.slice(-4)}`}
                           </span>
@@ -525,7 +525,7 @@ function DashboardContent({ stats, approvals: initialApprovals, approvalHistory:
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted">Token Price</span>
-                          <span className="text-accent">{c.pulsePrice > 0 ? `$${c.pulsePrice.toFixed(2)}` : "four.meme curve"}</span>
+                          <span className="text-accent">{c.pulsePrice > 0 ? `$${c.pulsePrice.toFixed(2)}` : "flap.sh curve"}</span>
                         </div>
                       </>
                     ) : (
@@ -591,7 +591,7 @@ function DashboardContent({ stats, approvals: initialApprovals, approvalHistory:
                     </div>
                     {c.hasFlapToken && (
                       <div>
-                        <span className="text-muted">four.meme Token</span>
+                        <span className="text-muted">flap.sh Token</span>
                         <p className="text-foreground mt-0.5 font-mono break-all text-xs">
                           {c.stellarAssetCode}
                         </p>

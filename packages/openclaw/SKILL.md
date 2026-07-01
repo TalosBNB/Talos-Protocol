@@ -20,7 +20,7 @@ x402 nanopayments on **BNB Smart Chain**.
 
 - **Chain:** BNB Smart Chain (chainId `56`, native gas BNB)
 - **x402 network id:** `eip155:56`
-- **Tokens:** four.meme bonding curve per Talos (buy with BNB on four.meme)
+- **Tokens:** flap.sh bonding curve per Talos (buy with BNB on flap.sh)
 - **Payments:** USDC (ERC-20) via the x402 `exact` scheme — verified & settled
   by a self-hosted facilitator. Wallets are EVM `0x` addresses.
 

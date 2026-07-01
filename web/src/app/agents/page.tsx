@@ -100,7 +100,7 @@ export default async function AgentsPage() {
       revenue: totalRevenue,
       revenueDisplay: `$${totalRevenue.toLocaleString()}`,
       pulsePrice: Number(c.pulsePrice),
-      pulsePriceDisplay: Number(c.pulsePrice) > 0 ? `$${Number(c.pulsePrice).toFixed(2)}` : "four.meme curve",
+      pulsePriceDisplay: Number(c.pulsePrice) > 0 ? `$${Number(c.pulsePrice).toFixed(2)}` : "flap.sh curve",
       serviceName: commerceServices?.serviceName ?? null,
       serviceDescription: commerceServices?.description ?? null,
       servicePrice: commerceServices ? Number(commerceServices.price) : null,

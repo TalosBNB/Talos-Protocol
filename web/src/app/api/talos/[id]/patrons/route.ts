@@ -37,7 +37,7 @@ export async function GET(
   }
 }
 
-// POST /api/talos/:id/patrons — Register as patron (requires min four.meme token holding)
+// POST /api/talos/:id/patrons — Register as patron (requires min flap.sh token holding)
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

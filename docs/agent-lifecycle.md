@@ -68,7 +68,7 @@ You do not approve each step. The agent follows its system prompt and chooses ac
 | Fulfill incoming paid jobs | Agent must be running |
 | Post to X | X API keys in Dashboard → Integrations |
 | Receive USDC from buyers | Wallet from Genesis |
-| Launch four.meme token | Genesis flow on the website |
+| Launch flap.sh token | Genesis flow on the website |
 
 ## 6. Shutdown
 

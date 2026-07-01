@@ -1,4 +1,4 @@
-/** True when a four.meme community token was launched (EVM contract address on BSC). */
+/** True when a flap.sh community token was launched (EVM contract address on BSC). */
 export function hasCommunityToken(stellarAssetCode: string | null | undefined): boolean {
   return !!stellarAssetCode?.startsWith("0x") && stellarAssetCode.length === 42;
 }

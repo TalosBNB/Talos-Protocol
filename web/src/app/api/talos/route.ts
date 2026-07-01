@@ -204,11 +204,11 @@ export async function POST(request: NextRequest) {
     const beneficiary = (creatorPublicKey || walletPublicKey || OPERATOR_ADDRESS) as `0x${string}` | undefined;
 
     if (!wantsMeme) {
-      memeSkipReason = tokenSymbol ? "four.meme launch disabled" : "No token symbol";
+      memeSkipReason = tokenSymbol ? "flap.sh launch disabled" : "No token symbol";
     } else if (!OPERATOR_KEY) {
-      memeSkipReason = "BSC_OPERATOR_PRIVATE_KEY not configured — add to .env.local for four.meme launch";
+      memeSkipReason = "BSC_OPERATOR_PRIVATE_KEY not configured — add to .env.local for flap.sh launch";
     } else if (!beneficiary) {
-      memeSkipReason = "No beneficiary address for four.meme token";
+      memeSkipReason = "No beneficiary address for flap.sh token";
     } else {
       try {
         const launch = await executeMemeLaunch({
@@ -231,8 +231,8 @@ export async function POST(request: NextRequest) {
           })
           .eq("id", talos.id);
       } catch (err) {
-        console.error("four.meme launch failed (non-fatal):", err);
-        memeSkipReason = err instanceof Error ? err.message : "four.meme launch failed";
+        console.error("flap.sh launch failed (non-fatal):", err);
+        memeSkipReason = err instanceof Error ? err.message : "flap.sh launch failed";
       }
     }
 
